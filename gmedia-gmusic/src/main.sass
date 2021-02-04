@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap')
+
+$text: #fff
+$border: #000
+$back: #292d34
+$back-hover: #1b1d21
+$main: #2ce883
+$hover: $main
+
+html, body
+  background: $back
+  color: $text
+  padding: 0
+  margin: 0
+  font-family: 'Open Sans', sans-serif
+
+body
+  div.main-menu
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    text-align: center
+
+    .option
+      border: $border 1px solid
+      padding: 2%
+      margin-bottom: 0.4vh
+      width: 30vw
+      border-radius: 0.3vw
+
+      &:hover
+        cursor: pointer
+        background: $back-hover
+
+      h2
+        margin-top: 0
+
+.prompt-container
+  position: absolute
+  left: 50%
+  transform: translateX(-50%)
+
+  div
+    background: $back-hover
+    padding: 3vw
+    border-radius: 0.3vw
+
+button
+  color: #fff
+  background: transparent
+  border: $border 1px solid
+  border-radius: 0.3vw
+  outline: none
+  padding: 1vw
+
+  &:hover
+    background: $hover
+    cursor: pointer
+
+input
+  color: #fff
+  background: transparent
+  border: $border 1px solid
+  border-radius: 0.3vw
+  outline: none
+  padding: 1vw
+
+  &:focus
+    background: $hover
