@@ -1,5 +1,14 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
+const fs = require('fs')
+const os = require('os')
+
+if (!fs.existsSync(path.join((os.platform() === 'win32' ? 'C:/Users/' : '/home/') + os.userInfo().username + '/', '/gmedia-gmusic').replace(/\\/g, '/'))) {
+  fs.mkdirSync(path.join((os.platform() === 'win32' ? 'C:/Users/' : '/home/') + os.userInfo().username + '/', '/gmedia-gmusic').replace(/\\/g, '/'))
+}
+if (!fs.existsSync(path.join((os.platform() === 'win32' ? 'C:/Users/' : '/home/') + os.userInfo().username + '/', '/gmedia-gmusic/projects').replace(/\\/g, '/'))) {
+  fs.mkdirSync(path.join((os.platform() === 'win32' ? 'C:/Users/' : '/home/') + os.userInfo().username + '/', '/gmedia-gmusic/projects').replace(/\\/g, '/'))
+}
 
 app.allowRendererProcessReuse = false
 

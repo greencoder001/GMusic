@@ -2,6 +2,9 @@
 
 const easymidi = require('easymidi')
 const { v4 } = require('uuid')
+const path = require('path')
+const os = require('os')
+const fs = require('fs')
 
 let MIDIInputDevices = []
 let inputs = []
@@ -65,16 +68,80 @@ function prompt (q, b = 'Ok') {
 }
 window.prompt = prompt
 
+const p = (v) => {
+  v = v.replace(/\//g, '__slash__')
+  v = v.replace(/\\/g, '__backslash__')
+  v = v.replace(/:/g, '__doublepoint__')
+  v = v.replace(/\*/g, '__times__')
+  v = v.replace(/\?/g, '__qestionmark__')
+  v = v.replace(/"/g, '__quote__')
+  v = v.replace(/</g, '__sbracketleft__')
+  v = v.replace(/>/g, '__sbracketright__')
+  v = v.replace(/\|/g, '__highslash__')
+
+  return v
+}
+
+const openproj = (name) => {
+  const pa = path.join((os.platform() === 'win32' ? 'C:/Users/' : '/home/') + os.userInfo().username + '/', `/gmedia-gmusic/projects/${p(name)}`).replace(/\\/g, '/')
+  window.pp = pa
+  window.pn = name
+
+  $$('body').innerHTML = `
+    <div class="prompt-container"></div>
+    <span style="display:none" id="pn">${name}</span>
+    <div class="editing">
+      <div class="top">
+        <div class="toolc" id="toolc">
+          <div class="tools" id="tools">
+
+          </div>
+          <div class="toolp" id="toolp">
+
+          </div>
+        </div>
+        <div class="preview">
+          
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="timeline" id="timeline">
+
+        </div>
+      </div>
+    </div>
+  `
+}
+
 function newProject () {
   prompt('Name your project:').then(name => {
-    console.log(name)
+    let func = false
+    try {
+      fs.mkdirSync(path.join((os.platform() === 'win32' ? 'C:/Users/' : '/home/') + os.userInfo().username + '/', `/gmedia-gmusic/projects/${p(name)}`).replace(/\\/g, '/'))
+      console.log('Creating Project: ' + name)
+      func = true
+    } catch {
+      console.log('Opening Project: ' + name)
+      openproj(name)
+    }
+
+    if (func) {
+      fs.writeFileSync(path.join((os.platform() === 'win32' ? 'C:/Users/' : '/home/') + os.userInfo().username + '/', `/gmedia-gmusic/projects/${p(name)}/project.json`).replace(/\\/g, '/'), JSON.stringify({
+        project: true,
+        p: []
+      }))
+      fs.mkdirSync(path.join((os.platform() === 'win32' ? 'C:/Users/' : '/home/') + os.userInfo().username + '/', `/gmedia-gmusic/projects/${p(name)}/src`).replace(/\\/g, '/'))
+
+      openproj(name)
+    }
   })
 }
 window.newProject = newProject
 
 function oldProject () {
   prompt('Name of the project:').then(name => {
-    console.log(name)
+    console.log('Opening Project: ' + name)
+    openproj(name)
   })
 }
 window.oldProject = oldProject

@@ -3,6 +3,7 @@
 $text: #fff
 $border: #000
 $back: #292d34
+$pre: #33373e
 $back-hover: #1b1d21
 $main: #2ce883
 $hover: $main
@@ -68,3 +69,49 @@ input
 
   &:focus
     background: $hover
+
+.editing
+  width: 100vw
+  height: 100vh
+  display: flex
+  justify-content: center
+  flex-direction: column
+
+  .top, .bottom
+    width: 100vw
+    height: 50vw
+
+  .top
+    display: flex
+    justify-content: flex-start
+    border-bottom: 1px solid $border
+    z-index: 5
+
+    .toolc
+      width: 30vw
+      height: 50vh
+      display: flex
+      justify-content: flex-start
+
+      .tools
+        width: 5vw
+        height: 100%
+        background: $back-hover
+        border-right: 1px solid $border
+        z-index: 6
+
+      .toolp
+        width: 25vw
+        height: 100%
+        background: $back
+        border-right: 1px solid $border
+        z-index: 5
+
+
+    .preview
+      width: 70vw
+      height: 50vh
+      background: $pre
+
+  .bottom
+    background: $back
